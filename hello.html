@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I Love You in Every Universe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0d0404;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Dancing Script', cursive;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ----- ANIMATED BACKGROUND: floating hearts, glow orbs, sparkles ----- */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* floating hearts */
+    .float-heart {
+      position: absolute;
+      font-size: 2.4rem;
+      color: #ff3b5c;
+      text-shadow: 0 0 25px #ff1a4a, 0 0 60px #ff1a4a;
+      animation: floatUp linear infinite;
+      opacity: 0.6;
+      user-select: none;
+      filter: drop-shadow(0 0 10px #ff4d6d);
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(110vh) scale(0.6) rotate(0deg); opacity: 0.2; }
+      10% { opacity: 0.7; }
+      90% { opacity: 0.7; }
+      100% { transform: translateY(-10vh) scale(1.4) rotate(720deg); opacity: 0; }
+    }
+
+    /* glowing orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 50, 80, 0.3) 0%, transparent 70%);
+      animation: orbPulse 5s ease-in-out infinite alternate;
+      filter: blur(30px);
+    }
+
+    @keyframes orbPulse {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.3; }
+      100% { transform: scale(1.6) translate(40px, -30px); opacity: 0.7; }
+    }
+
+    /* sparkle dots */
+    .sparkle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #ffb3b3;
+      border-radius: 50%;
+      box-shadow: 0 0 20px #ff4d6d, 0 0 60px #ff1a4a;
+      animation: sparkleFade 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes sparkleFade {
+      0% { opacity: 0.1; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1.8); }
+    }
+
+    /* ----- MAIN CARD (glass) ----- */
+    .love-card {
+      position: relative;
+      z-index: 10;
+      max-width: 720px;
+      width: 92%;
+      padding: 2.8rem 2rem 2.2rem;
+      background: rgba(20, 5, 5, 0.25);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 80px 20px 80px 20px;
+      border: 1px solid rgba(255, 150, 150, 0.2);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 80, 80, 0.1);
+      text-align: center;
+      animation: cardGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes cardGlow {
+      0% { box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 2px rgba(255, 80, 80, 0.1); }
+      100% { box-shadow: 0 30px 100px rgba(255, 30, 60, 0.3), 0 0 0 4px rgba(255, 120, 120, 0.25); }
+    }
+
+    /* ----- MAIN HEART (pulsing + rotating + glowing) ----- */
+    .main-heart-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 0.2rem;
+      animation: heartFloat 4s ease-in-out infinite;
+    }
+
+    @keyframes heartFloat {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-12px) scale(1.04); }
+      100% { transform: translateY(0px) scale(1); }
+    }
+
+    .main-heart {
+      font-size: 6.5rem;
+      line-height: 1;
+      display: inline-block;
+      animation: heartPulse 1.2s ease-in-out infinite, heartGlow 2s ease-in-out infinite alternate;
+      filter: drop-shadow(0 0 40px #ff3b5c);
+      color: #ff3b5c;
+      text-shadow: 0 0 60px #ff1a4a, 0 0 120px #ff1a4a;
+      transform-origin: center;
+    }
+
+    @keyframes heartPulse {
+      0% { transform: scale(1); }
+      15% { transform: scale(1.25); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.18); }
+      60% { transform: scale(1); }
+      80% { transform: scale(1.08); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes heartGlow {
+      0% { text-shadow: 0 0 40px #ff3b5c, 0 0 80px #ff1a4a; }
+      100% { text-shadow: 0 0 80px #ff6b8a, 0 0 160px #ff3b5c, 0 0 240px #ff1a4a; }
+    }
+
+    /* ----- TITLE (I LOVE YOU) animated blink + gradient + glow ----- */
+    .title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 4.8rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #ffb3b3, #ff7b7b, #ff3b5c, #ff7b7b, #ffb3b3);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradShift 4s ease-in-out infinite, titleGlow 2s ease-in-out infinite alternate, blinkText 2.8s ease-in-out infinite;
+      letter-spacing: 4px;
+      margin: 0.2rem 0 0.4rem;
+    }
+
+    @keyframes gradShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes titleGlow {
+      0% { filter: drop-shadow(0 0 20px rgba(255, 60, 80, 0.3)); }
+      100% { filter: drop-shadow(0 0 60px rgba(255, 60, 80, 0.9)); }
+    }
+
+    @keyframes blinkText {
+      0%, 100% { opacity: 1; }
+      4% { opacity: 0.6; }
+      8% { opacity: 1; }
+      50% { opacity: 1; }
+      54% { opacity: 0.5; }
+      58% { opacity: 1; }
+      92% { opacity: 1; }
+      96% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* ----- SUBTITLE (blinking, shimmer) ----- */
+    .sub-message {
+      font-size: 1.8rem;
+      color: #fccfcf;
+      letter-spacing: 4px;
+      font-weight: 300;
+      padding: 0.2rem 1.5rem;
+      display: inline-block;
+      border-radius: 60px;
+      background: rgba(255, 255, 255, 0.03);
+      border-left: 2px solid #ff7b7b;
+      border-right: 2px solid #ff7b7b;
+      animation: subShimmer 3s ease-in-out infinite, subBlink 3.2s ease-in-out infinite;
+      backdrop-filter: blur(2px);
+      margin-bottom: 0.8rem;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    @keyframes subShimmer {
+      0% { border-color: #ff7b7b; box-shadow: 0 0 15px rgba(255, 100, 100, 0.1); }
+      50% { border-color: #ffb3b3; box-shadow: 0 0 40px rgba(255, 100, 100, 0.3); }
+      100% { border-color: #ff7b7b; box-shadow: 0 0 15px rgba(255, 100, 100, 0.1); }
+    }
+
+    @keyframes subBlink {
+      0%, 100% { opacity: 1; }
+      10% { opacity: 0.5; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      90% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* ----- MESSAGE BOX (animated border, pulse) ----- */
+    .message-box {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50px 10px 50px 10px;
+      padding: 1.6rem 1.8rem;
+      margin: 1.2rem 0 1.8rem;
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 200, 200, 0.1);
+      animation: boxGlow 3s ease-in-out infinite alternate, boxPulse 2.2s ease-in-out infinite;
+      box-shadow: inset 0 0 40px rgba(255, 70, 70, 0.05);
+    }
+
+    @keyframes boxGlow {
+      0% { border-color: rgba(255, 150, 150, 0.1); box-shadow: 0 0 20px rgba(255, 50, 50, 0.05); }
+      100% { border-color: rgba(255, 100, 100, 0.4); box-shadow: 0 0 50px rgba(255, 50, 50, 0.15); }
+    }
+
+    @keyframes boxPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.01); }
+      100% { transform: scale(1); }
+    }
+
+    .message-box p {
+      font-size: 1.4rem;
+      line-height: 1.9;
+      color: #f0dbdb;
+      font-weight: 300;
+      letter-spacing: 1px;
+      font-family: 'Dancing Script', cursive;
+      animation: textFlicker 2.8s infinite;
+    }
+
+    @keyframes textFlicker {
+      0%, 100% { opacity: 1; text-shadow: 0 0 8px rgba(255, 80, 80, 0.2); }
+      50% { opacity: 0.8; text-shadow: 0 0 25px rgba(255, 80, 80, 0.5); }
+    }
+
+    .highlight {
+      color: #ff9a9a;
+      display: inline-block;
+      animation: highlightPulse 1.6s ease-in-out infinite;
+    }
+
+    @keyframes highlightPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.15); opacity: 0.9; }
+    }
+
+    /* ----- FOOTER (blinking, moving) ----- */
+    .footer-message {
+      margin-top: 1.8rem;
+      font-size: 1.2rem;
+      color: #b88a8a;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      border-top: 1px solid rgba(255, 200, 200, 0.08);
+      padding-top: 1.4rem;
+      animation: footerBlink 2.4s ease-in-out infinite, footerMove 6s ease-in-out infinite;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    @keyframes footerBlink {
+      0%, 100% { opacity: 0.7; }
+      25% { opacity: 0.3; }
+      50% { opacity: 1; }
+      75% { opacity: 0.4; }
+    }
+
+    @keyframes footerMove {
+      0% { transform: translateX(0); }
+      25% { transform: translateX(10px); }
+      75% { transform: translateX(-10px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* ----- CREATOR SECTION: animated text only (no image) ----- */
+    .creator-section {
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      animation: creatorFade 2s ease-out, creatorFloat 4s ease-in-out infinite 2s;
+    }
+
+    @keyframes creatorFade {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes creatorFloat {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .creator-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.7rem;
+      letter-spacing: 2px;
+      background: linear-gradient(45deg, #ffb3b3, #ff7b7b, #ff3b5c, #ff7b7b, #ffb3b3);
+      background-size: 300% 300%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: gradShift 4s ease-in-out infinite, creatorTextGlow 3s ease-in-out infinite alternate, creatorTextBlink 2.6s ease-in-out infinite;
+      text-shadow: 0 0 30px rgba(255, 60, 80, 0.2);
+      padding: 0.2rem 1.2rem;
+      border-top: 1px solid rgba(255, 150, 150, 0.15);
+      border-bottom: 1px solid rgba(255, 150, 150, 0.15);
+      display: inline-block;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+      background-color: rgba(255, 255, 255, 0.02);
+    }
+
+    @keyframes creatorTextGlow {
+      0% { filter: drop-shadow(0 0 10px rgba(255, 60, 80, 0.2)); }
+      100% { filter: drop-shadow(0 0 40px rgba(255, 60, 80, 0.6)); }
+    }
+
+    @keyframes creatorTextBlink {
+      0%, 100% { opacity: 1; }
+      4% { opacity: 0.5; }
+      8% { opacity: 1; }
+      50% { opacity: 1; }
+      54% { opacity: 0.5; }
+      58% { opacity: 1; }
+      92% { opacity: 1; }
+      96% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .creator-heart {
+      display: inline-block;
+      animation: creatorHeartBeat 1.4s ease-in-out infinite;
+      color: #ff4d6d;
+      font-size: 1.3rem;
+    }
+
+    @keyframes creatorHeartBeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.4); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.3); }
+      60% { transform: scale(1); }
+    }
+
+    /* ----- RESPONSIVE ----- */
+    @media (max-width: 550px) {
+      .love-card { padding: 2rem 1.2rem; }
+      .title { font-size: 3.2rem; }
+      .main-heart { font-size: 4.8rem; }
+      .sub-message { font-size: 1.4rem; }
+      .message-box p { font-size: 1.2rem; }
+      .float-heart { font-size: 1.6rem; }
+      .creator-text { font-size: 1.3rem; padding: 0.2rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== BACKGROUND LAYER: fully animated ===== -->
+  <div class="bg-layer" id="bgLayer">
+    <!-- orbs -->
+    <div class="orb" style="width: 300px; height: 300px; top: 5%; left: -5%; animation-delay: 0s;"></div>
+    <div class="orb" style="width: 400px; height: 400px; bottom: 0%; right: -8%; animation-delay: 1.5s; background: radial-gradient(circle, rgba(255, 30, 70, 0.25) 0%, transparent 70%);"></div>
+    <div class="orb" style="width: 250px; height: 250px; top: 40%; right: 5%; animation-delay: 0.8s; background: radial-gradient(circle, rgba(255, 100, 130, 0.2) 0%, transparent 70%);"></div>
+    <!-- sparkles -->
+    <div class="sparkle" style="top: 12%; left: 8%; animation-delay: 0.2s;"></div>
+    <div class="sparkle" style="top: 25%; right: 12%; animation-delay: 1.1s; width: 10px; height: 10px;"></div>
+    <div class="sparkle" style="bottom: 20%; left: 15%; animation-delay: 0.7s;"></div>
+    <div class="sparkle" style="bottom: 35%; right: 8%; animation-delay: 1.8s; width: 8px; height: 8px;"></div>
+    <div class="sparkle" style="top: 60%; left: 5%; animation-delay: 0.4s;"></div>
+    <div class="sparkle" style="top: 80%; right: 20%; animation-delay: 2.2s; width: 12px; height: 12px;"></div>
+  </div>
+
+  <!-- ===== MAIN CARD ===== -->
+  <div class="love-card">
+    <div class="main-heart-wrapper">
+      <span class="main-heart">❤️</span>
+    </div>
+    <h1 class="title">I Love You</h1>
+    <div class="sub-message">forever & always</div>
+
+    <div class="message-box">
+      <p>
+        <span class="highlight">❤️</span> 
+        You are my heartbeat, my everything 
+        <span class="highlight">❤️</span><br />
+        <span style="display: inline-block; margin-top: 6px; font-size: 1.1rem; opacity: 0.8; animation: textFlicker 3s infinite;">
+          Every moment with you is pure magic
+        </span>
+      </p>
+    </div>
+
+    <div class="footer-message">
+      ❤️ you are loved beyond measure ❤️
+    </div>
+
+    <!-- ===== CREATOR SECTION: text only ===== -->
+    <div class="creator-section">
+      <span class="creator-text">
+        <span class="creator-heart">❤️</span> Created by Aaditya Poudel <span class="creator-heart">❤️</span>
+      </span>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      "use strict";
+
+      // ---- INJECT FLOATING HEARTS ----
+      const bgLayer = document.getElementById('bgLayer');
+      const heartCount = 28;
+
+      for (let i = 0; i < heartCount; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'float-heart';
+        heart.textContent = '❤️';
+
+        const size = 1.2 + Math.random() * 2.2;
+        heart.style.fontSize = size + 'rem';
+        heart.style.left = Math.random() * 96 + '%';
+        const duration = 12 + Math.random() * 16;
+        heart.style.animationDuration = duration + 's';
+        heart.style.animationDelay = Math.random() * 20 + 's';
+        const opacity = 0.3 + Math.random() * 0.5;
+        heart.style.opacity = opacity;
+        const hue = 340 + Math.random() * 20;
+        heart.style.color = `hsl(${hue}, 90%, 65%)`;
+        heart.style.textShadow = `0 0 30px hsl(${hue}, 90%, 60%), 0 0 80px hsl(${hue}, 90%, 50%)`;
+
+        bgLayer.appendChild(heart);
+      }
+
+      // ---- extra tiny hearts ----
+      for (let i = 0; i < 12; i++) {
+        const tiny = document.createElement('span');
+        tiny.textContent = '💕';
+        tiny.style.position = 'absolute';
+        tiny.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+        tiny.style.left = Math.random() * 96 + '%';
+        tiny.style.top = Math.random() * 96 + '%';
+        tiny.style.opacity = 0.2 + Math.random() * 0.4;
+        tiny.style.animation = `floatUp ${14 + Math.random() * 20}s linear infinite`;
+        tiny.style.animationDelay = Math.random() * 18 + 's';
+        tiny.style.pointerEvents = 'none';
+        tiny.style.color = '#ff8a9a';
+        tiny.style.textShadow = '0 0 20px #ff4d6d';
+        bgLayer.appendChild(tiny);
+      }
+
+      // ---- card glow variation ----
+      const card = document.querySelector('.love-card');
+      setInterval(() => {
+        const glow = 0.8 + Math.random() * 0.4;
+        card.style.transition = 'box-shadow 0.3s ease';
+        card.style.boxShadow = `0 30px 80px rgba(0,0,0,0.8), 0 0 0 ${2 + Math.random() * 3}px rgba(255, 80, 80, ${0.1 + Math.random() * 0.2})`;
+        setTimeout(() => {
+          card.style.boxShadow = '0 30px 80px rgba(0,0,0,0.8), 0 0 0 2px rgba(255, 80, 80, 0.1)';
+        }, 400);
+      }, 3000);
+
+      // ---- main heart jump ----
+      const mainHeart = document.querySelector('.main-heart');
+      setInterval(() => {
+        mainHeart.style.animation = 'none';
+        void mainHeart.offsetHeight;
+        mainHeart.style.animation = 'heartPulse 0.7s ease-in-out 3, heartGlow 2s ease-in-out infinite alternate';
+        mainHeart.style.transform = 'scale(1.3)';
+        setTimeout(() => {
+          mainHeart.style.transform = 'scale(1)';
+        }, 700);
+        setTimeout(() => {
+          mainHeart.style.animation = 'heartPulse 1.2s ease-in-out infinite, heartGlow 2s ease-in-out infinite alternate';
+        }, 1500);
+      }, 5000);
+
+      // ---- burst effect ----
+      function createBurst() {
+        const burstContainer = document.createElement('div');
+        burstContainer.style.position = 'fixed';
+        burstContainer.style.inset = '0';
+        burstContainer.style.pointerEvents = 'none';
+        burstContainer.style.zIndex = '999';
+        for (let i = 0; i < 18; i++) {
+          const spark = document.createElement('span');
+          spark.textContent = ['❤️', '💕', '💖', '✨'][Math.floor(Math.random() * 4)];
+          spark.style.position = 'absolute';
+          spark.style.fontSize = (1.2 + Math.random() * 2.5) + 'rem';
+          spark.style.left = (10 + Math.random() * 80) + '%';
+          spark.style.top = (10 + Math.random() * 80) + '%';
+          spark.style.opacity = '0.9';
+          spark.style.transition = 'all 1.2s cubic-bezier(0.2, 0.9, 0.3, 1.2)';
+          spark.style.transform = 'scale(0.3) rotate(0deg)';
+          spark.style.filter = 'drop-shadow(0 0 30px #ff4d6d)';
+          spark.style.color = '#ff4d6d';
+          burstContainer.appendChild(spark);
+          requestAnimationFrame(() => {
+            const angle = Math.random() * 360;
+            const dist = 80 + Math.random() * 180;
+            const dx = Math.cos(angle) * dist;
+            const dy = Math.sin(angle) * dist;
+            spark.style.transform = `translate(${dx}px, ${dy}px) scale(1.6) rotate(${angle}deg)`;
+            spark.style.opacity = '0';
+          });
+        }
+        document.body.appendChild(burstContainer);
+        setTimeout(() => {
+          burstContainer.remove();
+        }, 1500);
+      }
+
+      setInterval(createBurst, 9000);
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('.love-card')) {
+          createBurst();
+        }
+      });
+      setTimeout(createBurst, 1800);
+
+      // ---- rotate footer messages ----
+      const footers = [
+        '❤️ you are my everything ❤️',
+        '💖 my heart beats for you 💖',
+        '✨ forever yours ✨',
+        '🌹 love you endlessly 🌹',
+        '💕 you are my world 💕',
+        '🌟 you are my star 🌟'
+      ];
+      const footerEl = document.querySelector('.footer-message');
+      setInterval(() => {
+        const newMsg = footers[Math.floor(Math.random() * footers.length)];
+        footerEl.textContent = newMsg;
+        footerEl.style.transition = 'opacity 0.5s';
+        footerEl.style.opacity = '0.3';
+        setTimeout(() => {
+          footerEl.style.opacity = '0.7';
+        }, 300);
+      }, 4500);
+
+      // ---- rotate message box text ----
+      const msgLines = [
+        'You are my heartbeat, my everything',
+        'I fall for you more each day',
+        'You are the light of my life',
+        'My soul finds peace in you',
+        'You are my greatest love',
+        'Forever and always, my love'
+      ];
+      const msgP = document.querySelector('.message-box p');
+      let msgIndex = 0;
+      setInterval(() => {
+        msgIndex = (msgIndex + 1) % msgLines.length;
+        const newText = msgLines[msgIndex];
+        msgP.innerHTML = `
+          <span class="highlight">❤️</span> 
+          ${newText} 
+          <span class="highlight">❤️</span><br />
+          <span style="display: inline-block; margin-top: 6px; font-size: 1.1rem; opacity: 0.8; animation: textFlicker 3s infinite;">
+            Every moment with you is pure magic
+          </span>
+        `;
+      }, 5000);
+
+    })();
+  </script>
+
+</body>
+</html>
